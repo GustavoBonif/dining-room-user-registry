@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -102,5 +104,16 @@ public class ClientService {
 
         String[] result = new String[emptyNames.size()];
         return emptyNames.toArray(result);
+    }
+
+    @Transactional
+    public ResponseEntity<Boolean> exists(Long id) {
+        Boolean clientExists = repository.existsById(id);
+
+        if (clientExists) {
+            return new ResponseEntity<>(clientExists, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(clientExists, HttpStatus.NOT_FOUND);
+        }
     }
 }

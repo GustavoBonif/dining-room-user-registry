@@ -62,4 +62,9 @@ public class ClientController {
             return new ResponseEntity<>("Erro ao atualizar a cliente: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping(value = "/exists/{id}")
+    public ResponseEntity<Boolean> exists(@PathVariable Long id) {
+        return service.exists(id);
+    }
 }
